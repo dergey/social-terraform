@@ -12,8 +12,6 @@ services:
       - PRELOAD_SLEEP=30 # gives time for other services to boot before the application
     ports:
       - "8080:8080"
-    volumes:
-      - D:\TEMP\social\images:/images:rw
   social-mysql:
     container_name: social-mysql
     image: mysql:8.0.28
