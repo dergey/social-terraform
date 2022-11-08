@@ -1,0 +1,23 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+version: '3.8'
+services:
+  social-keycloak:
+    container_name: social-keycloak
+    image: quay.io/keycloak/keycloak:19.0.3
+    command: ['start-dev --import-realm']
+    volumes:
+      - ./realm-config:/opt/keycloak/data/import
+      - ./providers:/opt/keycloak/providers
+    environment:
+      - KC_DB=dev-file
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_FEATURES=scripts
+      - KC_HTTP_PORT=9080
+      - KC_HTTPS_PORT=9443
+      - JDBC_PROVIDER_DATABASE_URL=jdbc:mysql://social-mysql:3306/social?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      - JDBC_PROVIDER_DATABASE_USERNAME=root
+      - JDBC_PROVIDER_DATABASE_PASSWORD=
+    ports:
+      - "9080:9080"
+      - "9443:9443"
